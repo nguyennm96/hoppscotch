@@ -322,8 +322,11 @@ function setupTabStateSync() {
     ) {
       const tabStateFromSync =
         await platform.sync.tabState.loadTabStateFromSync()
-
-      if (tabStateFromSync && !confirmSync.value.isInitialSync) {
+      if (
+        tabStateFromSync &&
+        !confirmSync.value.isInitialSync &&
+        confirmSync.value.shouldSync
+      ) {
         tabStateForSync.value = tabStateFromSync
         showSyncToast()
         // Have to set isInitialSync to true here because the toast is shown

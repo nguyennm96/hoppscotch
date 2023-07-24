@@ -1,7 +1,6 @@
-import { defineConfig, loadEnv, normalizePath } from "vite"
-import { APP_INFO, META_TAGS } from "./meta"
-import { viteStaticCopy as StaticCopy } from "vite-plugin-static-copy"
-import generateSitemap from "vite-plugin-pages-sitemap"
+import {defineConfig, loadEnv, normalizePath} from "vite"
+import {APP_INFO, META_TAGS} from "./meta"
+import {viteStaticCopy as StaticCopy} from "vite-plugin-static-copy"
 import HtmlConfig from "vite-plugin-html-config"
 import Vue from "@vitejs/plugin-vue"
 import VueI18n from "@intlify/vite-plugin-vue-i18n"
@@ -9,13 +8,13 @@ import Components from "unplugin-vue-components/vite"
 import Icons from "unplugin-icons/vite"
 import Inspect from "vite-plugin-inspect"
 import WindiCSS from "vite-plugin-windicss"
-import { VitePWA } from "vite-plugin-pwa"
+import {VitePWA} from "vite-plugin-pwa"
 import Pages from "vite-plugin-pages"
 import Layouts from "vite-plugin-vue-layouts"
 import IconResolver from "unplugin-icons/resolver"
-import { FileSystemIconLoader } from "unplugin-icons/loaders"
+import {FileSystemIconLoader} from "unplugin-icons/loaders"
 import * as path from "path"
-import { VitePluginFonts } from "vite-plugin-fonts"
+import {VitePluginFonts} from "vite-plugin-fonts"
 import legacy from "@vitejs/plugin-legacy"
 
 const ENV = loadEnv("development", path.resolve(__dirname, "../../"))
@@ -78,16 +77,6 @@ export default defineConfig({
       routeStyle: "nuxt",
       dirs: "../hoppscotch-common/src/pages",
       importMode: "async",
-      onRoutesGenerated(routes) {
-        // HACK: See: https://github.com/jbaubree/vite-plugin-pages-sitemap/issues/173
-        return ((generateSitemap as any).default as typeof generateSitemap)({
-          routes,
-          nuxtStyle: true,
-          allowRobots: true,
-          dest: ".sitemap-gen",
-          hostname: ENV.VITE_BASE_URL,
-        })
-      },
     }),
     StaticCopy({
       targets: [
@@ -123,7 +112,7 @@ export default defineConfig({
         }),
         (compName: string) => {
           if (compName.startsWith("Hopp"))
-            return { name: compName, from: "@hoppscotch/ui" }
+            return {name: compName, from: "@hoppscotch/ui"}
           else return undefined
         },
       ],

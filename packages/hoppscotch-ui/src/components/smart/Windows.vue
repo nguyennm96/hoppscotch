@@ -382,9 +382,9 @@ watch(
   .tab {
     @apply relative;
     @apply flex;
-    @apply py-2;
+    @apply py-1;
     @apply font-semibold;
-    @apply w-46;
+    @apply w-35;
     @apply transition;
     @apply flex-1;
     @apply items-center;

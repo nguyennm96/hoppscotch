@@ -20,6 +20,7 @@ async function loadTabStateFromSync(): Promise<PersistableRESTTabState | null> {
     throw new Error("Cannot load request from sync without login")
 
   const res = await getCurrentRestSession()
+  console.log(res)
 
   if (E.isRight(res)) {
     const currentRESTSession = res.right.me.currentRESTSession

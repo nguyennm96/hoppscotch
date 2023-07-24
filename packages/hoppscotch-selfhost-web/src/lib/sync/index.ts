@@ -1,4 +1,4 @@
-import { Observable } from "rxjs"
+import {Observable} from "rxjs"
 import DispatchingStore from "@hoppscotch/common/newstore/DispatchingStore"
 
 export type DispatchersOf<T extends DispatchingStore<any, any>> =
@@ -39,15 +39,15 @@ export const getSyncInitFunction = <T extends DispatchingStore<any, any>>(
 
   // Start and stop the subscriptions according to the sync settings from profile
   shouldSyncObservable &&
-    shouldSyncObservable.subscribe((newSyncStatus) => {
-      if (oldSyncStatus === true && newSyncStatus === false) {
-        stopListeningToSubscriptions()
-      } else if (oldSyncStatus === false && newSyncStatus === true) {
-        startListeningToSubscriptions()
-      }
+  shouldSyncObservable.subscribe((newSyncStatus) => {
+    if (oldSyncStatus && !newSyncStatus) {
+      stopListeningToSubscriptions()
+    } else if (!oldSyncStatus && newSyncStatus) {
+      startListeningToSubscriptions()
+    }
 
-      oldSyncStatus = newSyncStatus
-    })
+    oldSyncStatus = newSyncStatus
+  })
 
   function startStoreSync() {
     store.dispatches$.subscribe((actionParams) => {
@@ -78,19 +78,20 @@ export const getSyncInitFunction = <T extends DispatchingStore<any, any>>(
       console.warn(
         "We don't have a function to start subscriptions. Please use `setupSubscriptions` to setup the start function."
       )
+    } else {
+      stopSubscriptions = startSubscriptions()
     }
-
-    stopSubscriptions = startSubscriptions()
   }
 
   function stopListeningToSubscriptions() {
+    console.log(stopSubscriptions)
     if (!stopSubscriptions) {
       console.warn(
         "We don't have a function to unsubscribe. make sure you return the unsubscribe function when using setupSubscriptions"
       )
+    } else {
+      stopSubscriptions()
     }
-
-    stopSubscriptions()
   }
 
   return {
